@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
@@ -22,6 +23,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -30,6 +32,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -49,6 +52,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             UnitConverterTheme {
+                val context = LocalContext.current
+                var presses by remember { mutableIntStateOf(0) }
                 Scaffold(
                     topBar = {
                         CenterAlignedTopAppBar(
@@ -64,6 +69,15 @@ class MainActivity : ComponentActivity() {
                                 textAlign = TextAlign.Center,
                                 text = "Created by Stefan 'GetRighhttt' Bayne",
                             )
+                        }
+                    },
+                    floatingActionButton = {
+                        FloatingActionButton(
+                            onClick = {
+                                presses++
+                                showToast(context = context, message = "FAB Clicked $presses times!")
+                            }) {
+                            Icon(Icons.Default.Add, contentDescription = "Add")
                         }
                     }
                 ) { innerPadding ->
@@ -244,7 +258,6 @@ fun UnitConverter(modifier: Modifier = Modifier) {
                 }
             }
         }
-
         Spacer(modifier = Modifier.padding(10.dp))
 
         Text("Result: $outputValue $outputUnit")
