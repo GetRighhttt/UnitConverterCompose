@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
@@ -34,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.unitconverter.ui.theme.UnitConverterTheme
@@ -54,6 +57,15 @@ class MainActivity : ComponentActivity() {
                             },
                         )
                     },
+                    bottomBar = {
+                        BottomAppBar{
+                            Text(
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center,
+                                text = "Created by Stefan 'GetRighhttt' Bayne",
+                            )
+                        }
+                    }
                 ) { innerPadding ->
                     UnitConverter(
                         modifier = Modifier
@@ -74,7 +86,7 @@ fun UnitConverter(modifier: Modifier = Modifier) {
      */
     var inputValue by remember { mutableStateOf("") }
     var outputValue by remember { mutableStateOf("") }
-    var inputUnit by remember { mutableStateOf("Centimeters") }
+    var inputUnit by remember { mutableStateOf("Meters") }
     var outputUnit by remember { mutableStateOf("Meters") }
     var inputExpanded by remember { mutableStateOf(false) }
     var outputExpanded by remember { mutableStateOf(false) }
@@ -84,7 +96,7 @@ fun UnitConverter(modifier: Modifier = Modifier) {
     fun convertUnits() {
         val inputValueDouble = inputValue.toDoubleOrNull() ?: 0.0
         val result =
-            (inputValueDouble * inputConversionFactor.doubleValue * 100.0 / outputConversionFactor.doubleValue).roundToInt() / 100
+            (inputValueDouble * inputConversionFactor.doubleValue * 100.0 / outputConversionFactor.doubleValue).roundToInt() / 100.0
         outputValue = result.toString()
     }
 
@@ -112,6 +124,7 @@ fun UnitConverter(modifier: Modifier = Modifier) {
             shape = Shapes().medium,
             onValueChange = {
                 inputValue = it
+                convertUnits()
             },
         )
 
