@@ -1,4 +1,4 @@
-package com.example.unitconverter
+package com.example.unitconverter.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -34,10 +34,19 @@ fun UnitConverter() {
     Column {
         OutlinedTextField(
             value = "",
-            onValueChange = {},
-            placeholder = { Text(text = "Enter Value") }
+            onValueChange = {
+                // Handle input change here
+            },
+            placeholder = {
+                Text(text = "Enter Value")
+            },
+            label = {
+                Text(text ="Values to Convert")
+            }
         )
-        Row {}
+        Row {
+            // Start horizontal alignment
+        }
     }
 }
 
