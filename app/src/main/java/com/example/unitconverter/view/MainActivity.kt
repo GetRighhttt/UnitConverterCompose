@@ -1,6 +1,8 @@
 package com.example.unitconverter.view
 
+import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
@@ -18,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.unitconverter.ui.theme.UnitConverterTheme
 
@@ -50,7 +54,7 @@ fun UnitConverter(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         Text("Unit Converter Demo")
 
         OutlinedTextField(
@@ -67,25 +71,31 @@ fun UnitConverter(modifier: Modifier = Modifier) {
                 Text(text = "Enter Value")
             },
         )
-        Row {
-            // Start horizontal alignment
+        Row(modifier = Modifier) {
+            // Necessary context with Jetpack Compose for displaying toast
+            val context = LocalContext.current
+
+            Button(onClick = {
+                showToast(context, "Convert Button Clicked!")
+            }) {
+                Text("Convert")
+            }
+            Button(onClick = {
+                showToast(context, "Save Button Clicked!")
+            }) {
+                Text("Save")
+            }
         }
         Text("Result: ")
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun showToast(context: Context, message: String) =
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    UnitConverterTheme {
-        Greeting("Android")
-    }
+    UnitConverter(modifier = Modifier)
 }
