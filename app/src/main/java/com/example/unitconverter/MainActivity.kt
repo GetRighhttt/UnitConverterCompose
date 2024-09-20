@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             UnitConverterTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold() { _ ->
                     UnitConverter()
                 }
             }
@@ -29,10 +29,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun UnitConverter(modifier: Modifier = Modifier) {
+fun UnitConverter() {
+    Text(text = "Unit Converter")
     Column {
-        Row {
-        }
+        OutlinedTextField(
+            value = "",
+            onValueChange = {},
+            placeholder = { Text(text = "Enter Value") }
+        )
+        Row {}
     }
 }
 
