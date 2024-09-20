@@ -119,7 +119,7 @@ fun UnitConverter(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Unit Converter Demo")
+        Text("Let's Start Converting!")
 
         Spacer(modifier = Modifier.padding(16.dp))
 
@@ -127,7 +127,7 @@ fun UnitConverter(modifier: Modifier = Modifier) {
             value = inputValue, // outlined text field input state
             singleLine = true,
             placeholder = {
-                Text(text = "Enter Value:")
+                Text(text = "Enter Value in Meters:")
             },
             label = {
                 Text(text = "Value: ")
@@ -164,6 +164,15 @@ fun UnitConverter(modifier: Modifier = Modifier) {
                     }
                 ) {
                     DropdownMenuItem(
+                        text = { Text("Millimeters") },
+                        onClick = {
+                            inputUnit = "Millimeters"
+                            inputExpanded = false
+                            inputConversionFactor.doubleValue = 0.001
+                            convertUnits()
+                        }
+                    )
+                    DropdownMenuItem(
                         text = { Text("Centimeters") },
                         onClick = {
                             inputUnit = "Centimeters"
@@ -182,6 +191,24 @@ fun UnitConverter(modifier: Modifier = Modifier) {
                         }
                     )
                     DropdownMenuItem(
+                        text = { Text("Kilometers") },
+                        onClick = {
+                            inputUnit = "Kilometers"
+                            inputExpanded = false
+                            inputConversionFactor.doubleValue = 1000.0
+                            convertUnits()
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Inches") },
+                        onClick = {
+                            inputUnit = "Inches"
+                            inputExpanded = false
+                            inputConversionFactor.doubleValue = 0.0254
+                            convertUnits()
+                        }
+                    )
+                    DropdownMenuItem(
                         text = { Text("Feet") },
                         onClick = {
                             inputUnit = "Feet"
@@ -191,11 +218,11 @@ fun UnitConverter(modifier: Modifier = Modifier) {
                         }
                     )
                     DropdownMenuItem(
-                        text = { Text("Millimeters") },
+                        text = { Text("Miles") },
                         onClick = {
-                            inputUnit = "Millimeters"
+                            inputUnit = "Miles"
                             inputExpanded = false
-                            inputConversionFactor.doubleValue = 0.001
+                            inputConversionFactor.doubleValue = 1609.34
                             convertUnits()
                         }
                     )
@@ -220,6 +247,15 @@ fun UnitConverter(modifier: Modifier = Modifier) {
                     }
                 ) {
                     DropdownMenuItem(
+                        text = { Text("Millimeters") },
+                        onClick = {
+                            outputUnit = "Millimeters"
+                            outputExpanded = false
+                            outputConversionFactor.doubleValue = 0.001
+                            convertUnits()
+                        }
+                    )
+                    DropdownMenuItem(
                         text = { Text("Centimeters") },
                         onClick = {
                             outputUnit = "Centimeters"
@@ -238,6 +274,24 @@ fun UnitConverter(modifier: Modifier = Modifier) {
                         }
                     )
                     DropdownMenuItem(
+                        text = { Text("Kilometers") },
+                        onClick = {
+                            outputUnit = "Kilometers"
+                            outputExpanded = false
+                            outputConversionFactor.doubleValue = 1000.0
+                            convertUnits()
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Inches") },
+                        onClick = {
+                            outputUnit = "Inches"
+                            outputExpanded = false
+                            outputConversionFactor.doubleValue = 0.0254
+                            convertUnits()
+                        }
+                    )
+                    DropdownMenuItem(
                         text = { Text("Feet") },
                         onClick = {
                             outputUnit = "Feet"
@@ -247,11 +301,11 @@ fun UnitConverter(modifier: Modifier = Modifier) {
                         }
                     )
                     DropdownMenuItem(
-                        text = { Text("Millimeters") },
+                        text = { Text("Miles") },
                         onClick = {
-                            outputUnit = "Millimeters"
+                            outputUnit = "Miles"
                             outputExpanded = false
-                            outputConversionFactor.doubleValue = 0.001
+                            outputConversionFactor.doubleValue = 1609.34
                             convertUnits()
                         }
                     )
