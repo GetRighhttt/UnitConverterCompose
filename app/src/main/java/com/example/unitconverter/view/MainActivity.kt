@@ -26,12 +26,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.unitconverter.ui.theme.UnitConverterTheme
+import kotlin.math.roundToInt
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -62,6 +68,24 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun UnitConverter(modifier: Modifier = Modifier) {
+
+    /*
+    States needed for all of the unit conversion values
+     */
+    var inputValue by remember { mutableStateOf("") }
+    var outputValue by remember { mutableStateOf("") }
+    var inputUnit by remember { mutableStateOf("Centimeters") }
+    var outputUnit by remember { mutableStateOf("Meters") }
+    var inputExpanded by remember { mutableStateOf(false) }
+    var outputExpanded by remember { mutableStateOf(false) }
+    val conversionFactor = remember { mutableDoubleStateOf(0.01) }
+
+    fun convertUnits() {
+        val inputValueDouble = inputValue.toDoubleOrNull() ?: 0.0
+        val result = (inputValueDouble * conversionFactor.doubleValue * 100.0).roundToInt() / 100
+        outputValue = result.toString()
+    }
+
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -72,17 +96,20 @@ fun UnitConverter(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.padding(16.dp))
 
         OutlinedTextField(
-            value = "",
+            value = inputValue, // outlined text field input state
             singleLine = true,
+            placeholder = {
+                Text(text = "Enter Value:")
+            },
+            label = {
+                Text(text = "Value: ")
+            },
             supportingText = {
                 Text("Please enter a number to convert...")
             },
             shape = Shapes().medium,
             onValueChange = {
-                // Handle input change here
-            },
-            placeholder = {
-                Text(text = "Enter Value:")
+                inputValue = it
             },
         )
 
@@ -91,51 +118,68 @@ fun UnitConverter(modifier: Modifier = Modifier) {
         Row(modifier = Modifier) {
             // Necessary context with Jetpack Compose for displaying toast
             val context = LocalContext.current
+
+            /* Start of Input */
             Box() {
+                // Input Button
                 Button(onClick = {
-                    showToast(context, "Choose Button Clicked!")
+                    inputExpanded = true
                 }) {
-                    Text("Choose: ")
+                    Text("Choose Input: ")
                     Icon(Icons.Default.ArrowDropDown, contentDescription = "Drop Down Icon")
                 }
                 DropdownMenu(
-                    expanded = false,
+                    expanded = inputExpanded,
                     onDismissRequest = {
-                        // TODO: Handle dismiss request
+                        inputExpanded = false
                     }
                 ) {
                     DropdownMenuItem(
                         text = { Text("Centimeters") },
-                        onClick = { /*TODO: On CLick*/ }
+                        onClick = {
+                            inputUnit = "Centimeters"
+                            inputExpanded = false
+                        }
                     )
                     DropdownMenuItem(
                         text = { Text("Meters") },
-                        onClick = { /*TODO: On CLick*/ }
+                        onClick = {
+                            inputUnit = "Meters"
+                            inputExpanded = false
+                        }
                     )
                     DropdownMenuItem(
                         text = { Text("Feet") },
-                        onClick = { /*TODO: On CLick*/ }
+                        onClick = {
+                            inputUnit = "Feet"
+                            inputExpanded = false
+                        }
                     )
                     DropdownMenuItem(
                         text = { Text("Millimeters") },
-                        onClick = { /*TODO: On CLick*/ }
+                        onClick = {
+                            inputUnit = "Millimeters"
+                            inputExpanded = false
+                        }
                     )
                 }
             }
 
             Spacer(modifier = Modifier.padding(5.dp))
 
+            /* Start of Output */
             Box() {
+                // Output Button
                 Button(onClick = {
-                    showToast(context, "Convert Button Clicked!")
+                    outputExpanded = true
                 }) {
-                    Text("Convert To: ")
+                    Text("Choose Output: ")
                     Icon(Icons.Default.ArrowDropDown, contentDescription = "Drop Down Icon")
                 }
                 DropdownMenu(
-                    expanded = false,
+                    expanded = outputExpanded,
                     onDismissRequest = {
-                        // TODO: Handle dismiss request
+                        outputExpanded = false
                     }
                 ) {
                     DropdownMenuItem(
